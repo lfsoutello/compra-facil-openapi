@@ -1,0 +1,61 @@
+swagger: "2.0"
+info:
+  description: "Essa é a documentação da API de parceiros do Compra Fácil para gerenciamento de afiliados e busca de produtos"
+  version: "1.0.0"
+  title: "Swagger API Compra Fácil"
+  contact:
+    email: "engenharia@comprafacil.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "api.comprafacil.com"
+basePath: "/v1"
+tags:
+- name: "produtos"
+  description: "Pesquise produtos no Compra Fácil"
+- name: "afiliados"
+  description: "Gerencia afiliados no compra fácil"
+schemes:
+- "https"
+paths:
+  /produtos:
+    get:
+      tags:
+      - "produtos"
+      summary: "Procure todos os pordutos usando os filtros parafinar a busca"
+      description: "Aqui são apresentados como parâmetros os possíveis filtros de busca e no último parâmetro os critérios de busca"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "preco_minimo"
+        in: "query"
+        description: "Preço mínimo do produto"
+        type: "double"
+      - name: "preco_maximo"
+        in: "query"
+        description: "Preço máximo do produto"
+        type: double
+      - name: "desconto"
+        in: "query"
+        description: "Caso verdadeiro traz apenas produtos com desconto, coso falso traz todos os produtos"
+        type: boolean
+        default: false
+      - name: "nome"
+        in: "query"
+        description: "Nome do produto"
+        type: string
+      - name: "categoria"
+        in: "query"
+        description: "Categoria do produto"
+        type: string
+      - name: "ordem"
+        in: "query"
+        description: "Critério de ordenação dos resultados"
+        type: string
+        enum: [preco_crescente, preco_decrescente, mais_vendidos, lancamentos]
+        default: mais_vendidos
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid status value"
