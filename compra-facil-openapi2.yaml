@@ -76,10 +76,18 @@ paths:
         - client_id: []
         - access_token: []        
       responses:
-        "200":
-          description: "successful operation"
-        "400":
-          description: "Invalid status value"
+        '200':
+          description: Sucesso.
+          schema: #TODO
+            type: array
+            items:
+              $ref: '#/definitions/recurso'
+        '401':
+          description: Não autorizado.
+        '403':
+          description: Proibido.
+        '500':
+          description: Erro Interno.
 definitions: #TODO
   recurso:
     type: object
@@ -89,4 +97,4 @@ definitions: #TODO
         description: Identificadro do recurso.
       resourceName:
         type: string
-        description: Nome do recurso.          
+        description: Nome do recurso.
