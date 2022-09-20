@@ -82,7 +82,7 @@ paths:
           schema: #TODO
             type: array
             items:
-              $ref: '#/definitions/recurso'
+              $ref: '#/definitions/produto'
         '401':
           description: Não autorizado.
         '403':
