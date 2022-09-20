@@ -225,6 +225,28 @@ paths:
           description: Proibido.
         '500':
           description: Erro Interno.
+    post:
+      tags:
+        - afiliados
+      summary: 'Cadastre um afiliado'
+      description: 'Cadastre um novo afiliado para o e-commerce compra-fácil para atuar como vendedor parceiro'
+      operationId: adicionarAfiliado
+      parameters:
+      - name: "afiliado"
+        in: "body"
+        description: "Cadastre um novo afiliado"
+        required: true
+        schema:
+          $ref: '#/definitions/afiliado'
+      responses:
+        '200':
+          description: Sucesso.
+        '401':
+          description: Não autorizado.
+        '403':
+          description: Proibido.
+        '500':
+          description: Erro Interno.               
 definitions:
   produto:
     type: object
