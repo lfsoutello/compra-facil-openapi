@@ -30,11 +30,11 @@ paths:
       - name: "preco_minimo"
         in: "query"
         description: "Preço mínimo do produto"
-        type: "double"
+        type: "number"
       - name: "preco_maximo"
         in: "query"
         description: "Preço máximo do produto"
-        type: double
+        type: number
       - name: "desconto"
         in: "query"
         description: "Caso verdadeiro traz apenas produtos com desconto, coso falso traz todos os produtos"
