@@ -198,6 +198,33 @@ paths:
           description: Proibido.
         '500':
           description: Erro Interno.
+  /afiliados:
+    get:
+      tags:
+      - "afiliados"
+      summary: "Busque afiliados"
+      description: "Retorna todos os afiliados cadastrados no e-commerce compra-fácil"
+      consumes:
+        - application/json
+      produces:
+      - "application/json"
+      operationId: obterAfiliados
+      security: #TODO
+        - client_id: []
+        - access_token: []        
+      responses:
+        '200':
+          description: Sucesso.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/afiliado'
+        '401':
+          description: Não autorizado.
+        '403':
+          description: Proibido.
+        '500':
+          description: Erro Interno.
 definitions:
   produto:
     type: object
