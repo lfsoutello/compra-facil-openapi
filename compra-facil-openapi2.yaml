@@ -79,7 +79,7 @@ paths:
       responses:
         '200':
           description: Sucesso.
-          schema: #TODO
+          schema:
             type: array
             items:
               $ref: '#/definitions/produto'
@@ -338,7 +338,7 @@ paths:
           description: Proibido.
         '500':
           description: Erro Interno.  
-definitions:
+definitions: 
   produto:
     type: object
     properties:
