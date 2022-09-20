@@ -309,6 +309,35 @@ paths:
             description: Proibido.
           '500':
             description: Erro Interno.                  
+    delete:
+      tags:
+        - "afiliados"
+      summary: "Delete um afiliado cadastrado"
+      description: 'Remove um afiliado cadastrado no e-commerce compra-fácil a partir do seu id'
+      consumes:
+        - application/json
+      produces:
+        - "application/json"      
+      operationId: removerAfiliado
+      parameters:
+        - name: afiliadoId
+          in: path
+          description: 'Id do afiliado a ser removido'
+          required: true
+          type: integer
+          format: int64      
+      security: #TODO
+        - client_id: []
+        - access_token: []          
+      responses:
+        '200':
+          description: Sucesso.
+        '401':
+          description: Não autorizado.
+        '403':
+          description: Proibido.
+        '500':
+          description: Erro Interno.  
 definitions:
   produto:
     type: object
