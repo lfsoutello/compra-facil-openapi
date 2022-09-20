@@ -247,6 +247,40 @@ paths:
           description: Proibido.
         '500':
           description: Erro Interno.               
+  /afiliados/{afiliadoId}:               
+    get:
+      tags:
+        - "afiliados"
+      summary: 'Busque afiliado por ID' 
+      description: 'Retorna detalhes de um afiliado cadastrado no e-commerce compra-fácil a partir de seu ID'
+      consumes:
+        - application/json
+      produces:
+        - "application/json"      
+      operationId: obterAfiliadoPorId
+      parameters:
+        - name: afiliadoId
+          in: path
+          description: 'Id do afiliado a ser consultado'
+          required: true
+          type: integer
+          format: int64
+      security: #TODO
+        - client_id: []
+        - access_token: []          
+      responses:
+        '200':
+          description: Sucesso.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/afiliado'
+        '401':
+          description: Não autorizado.
+        '403':
+          description: Proibido.
+        '500':
+          description: Erro Interno.
 definitions:
   produto:
     type: object
