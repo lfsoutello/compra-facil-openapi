@@ -89,6 +89,28 @@ paths:
           description: Proibido.
         '500':
           description: Erro Interno.
+    post:
+      tags:
+        - produtos
+      summary: 'Cadastre seu produto em sua loja parceira'
+      description: 'Cadastrando um produto aqui, ele aparecerá no e-commerce compra-fácil como produto de vendedores parceiros'
+      operationId: adicionarProduto
+      parameters:
+      - name: "produto"
+        in: "body"
+        description: "Cadastre um novo produto"
+        required: true
+        schema:
+          $ref: '#/definitions/produto'
+      responses:
+        '200':
+          description: Sucesso.
+        '401':
+          description: Não autorizado.
+        '403':
+          description: Proibido.
+        '500':
+          description: Erro Interno.               
   /produtos/{produtoId}:
     get:
       tags:
