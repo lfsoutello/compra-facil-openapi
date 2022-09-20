@@ -248,3 +248,24 @@ definitions:
         example: [
           'https://www.youtube.com/watch?v=2Jdpwb_0F5w'
         ]    
+  afiliado:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nome:
+        type: string
+        example: "Fulano da Silva"
+      email: 
+        type: string
+        example: "fulano@dominio.com"
+      cpf:
+        type: string
+        example: '12345678901'
+      nomeEmpresa:
+        type: string
+        example: "MarketPlace afiliado do Fulano"
+      cnpjEmpresa:
+        type: string
+        example: '12345678901234'
