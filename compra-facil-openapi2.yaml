@@ -98,8 +98,8 @@ paths:
       consumes:
         - application/json
       produces:
-      - "application/json"      
-      operationId: obterProdutoPorID
+        - "application/json"      
+      operationId: obterProdutoPorId
       parameters:
         - name: produtoId
           in: path
@@ -107,6 +107,35 @@ paths:
           required: true
           type: integer
           format: int64
+      security: #TODO
+        - client_id: []
+        - access_token: []          
+      responses:
+        '200':
+          description: Sucesso.
+        '401':
+          description: Não autorizado.
+        '403':
+          description: Proibido.
+        '500':
+          description: Erro Interno.
+    delete:
+      tags:
+        - "produtos"
+      summary: "Delete um produto já cadastrado"
+      description: 'Remove um produto cadastrado no e-commerce compra-fácil a partir do seu id'
+      consumes:
+        - application/json
+      produces:
+        - "application/json"      
+      operationId: removerProdutoPorId
+      parameters:
+        - name: produtoId
+          in: path
+          description: 'Id do produto a ser removido'
+          required: true
+          type: integer
+          format: int64      
       security: #TODO
         - client_id: []
         - access_token: []          
