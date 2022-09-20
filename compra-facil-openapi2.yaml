@@ -12,7 +12,7 @@ host: "api.comprafacil.com"
 basePath: "/v1"
 tags:
 - name: "produtos"
-  description: "Pesquise produtos no Compra Fácil"
+  description: "Procure e gerencie produtos no Compra Fácil"
 - name: "afiliados"
   description: "Gerencia afiliados no compra fácil"
 security: #TODO
@@ -44,6 +44,7 @@ paths:
         - application/json
       produces:
       - "application/json"
+      operationId: obterProdutos
       parameters:
       - name: "preco_minimo"
         in: "query"
