@@ -141,6 +141,34 @@ paths:
           description: Proibido.
         '500':
           description: Erro Interno.
+    put:
+        tags:
+          - produtos
+        summary: 'Altere um produto cadastrado'
+        description: 'Altere um produto já cadastrado a partir do seu id'
+        operationId: alterarProduto
+        parameters:
+        - name: produtoId
+          in: path
+          description: 'Id do produto a ser alterado'
+          required: true
+          type: integer
+          format: int64        
+        - name: "produto"
+          in: "body"
+          description: "Cadastre um novo produto"
+          required: true
+          schema:
+            $ref: '#/definitions/produto'
+        responses:
+          '200':
+            description: Sucesso.
+          '401':
+            description: Não autorizado.
+          '403':
+            description: Proibido.
+          '500':
+            description: Erro Interno.                  
     delete:
       tags:
         - "produtos"
