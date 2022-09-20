@@ -29,6 +29,10 @@ securityDefinitions: #TODO
     name: access_token
 schemes:
 - "https"
+consumes: 
+  - application/json
+produces:
+  - application/json
 paths:
   /produtos:
     get:
@@ -36,6 +40,8 @@ paths:
       - "produtos"
       summary: "Procure todos os pordutos usando os filtros parafinar a busca"
       description: "Aqui são apresentados como parâmetros os possíveis filtros de busca e no último parâmetro os critérios de busca"
+      consumes:
+        - application/json
       produces:
       - "application/json"
       parameters:
