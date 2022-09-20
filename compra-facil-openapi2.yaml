@@ -80,3 +80,13 @@ paths:
           description: "successful operation"
         "400":
           description: "Invalid status value"
+definitions: #TODO
+  recurso:
+    type: object
+    properties:
+      resourceId:
+        type: string
+        description: Identificadro do recurso.
+      resourceName:
+        type: string
+        description: Nome do recurso.          
