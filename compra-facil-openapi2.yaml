@@ -148,13 +148,53 @@ paths:
           description: Proibido.
         '500':
           description: Erro Interno.
-definitions: #TODO
-  recurso:
+definitions:
+  produto:
     type: object
     properties:
-      resourceId:
+      id:
+        type: integer
+        example: 1   
+      nome:
         type: string
-        description: Identificadro do recurso.
-      resourceName:
+        example: "Smartphone Samsung Galaxy S22 Ultra"
+      descricaoCurta:
         type: string
-        description: Nome do recurso.
+        example: "Smartphone Samsung Galaxy S22 Ultra 5G SM-S908E 12GB RAM 256GB Câmera Quádrupla"
+      descricao:
+        type: string
+        example: "Contando com o sistema operacional Android, Samsung traz seu modelo, o Smartphone Samsung Galaxy S22 Ultra 5G SM-S908E 12GB RAM 256GB Câmera Quádrupla. O aparelho apresenta 16.33cm de altura e 7.79cm de largura, com peso de 228.0g. O celular conta com uma frontal de 40.0 MP, sensores traseiros de 108.0 + 10.0 + 10.0 + 12.0 MP."
+      marca:
+        type: string
+        example: "Samsung"
+      ativo:
+        type: boolean
+        example: true
+      categorias:
+        example: ["Smartphone"]
+      detalhesDoProduto: 
+        example:
+          preco: 6499
+          quantidade: 15
+          pesoBruto: 0.430
+          pesoLiquido: 0.330
+          altura: 9
+          largura: 8
+          comprimento: 7
+          tipoDeUnidade: 'caixa'
+          codigoDeBarras: "123456789012"
+          atributos:
+            [
+              {tipo: "cor", nome: "Preto"},
+              {tipo: "cor", nome: "Azul"}
+            ]
+      urlFotos: 
+        example: [
+          'https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-s22-ultra-5g-2.jpg', 
+          'https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-s22-ultra-5g-6.jpg', 
+          'https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-s22-ultra-5g-4.jpg'
+        ]
+      urlVideos: 
+        example: [
+          'https://www.youtube.com/watch?v=2Jdpwb_0F5w'
+        ]    
