@@ -281,6 +281,34 @@ paths:
           description: Proibido.
         '500':
           description: Erro Interno.
+    put:
+        tags:
+          - afiliados
+        summary: 'Altere um afiliado cadastrado'
+        description: 'Altere um afiliado já cadastrado a partir do seu id'
+        operationId: alterarAfiliado
+        parameters:
+        - name: afiliadoId
+          in: path
+          description: 'Id do afiliado a ser alterado'
+          required: true
+          type: integer
+          format: int64        
+        - name: "afiliado"
+          in: "body"
+          description: "Altere um afiliado"
+          required: true
+          schema:
+            $ref: '#/definitions/afiliado'
+        responses:
+          '200':
+            description: Sucesso.
+          '401':
+            description: Não autorizado.
+          '403':
+            description: Proibido.
+          '500':
+            description: Erro Interno.                  
 definitions:
   produto:
     type: object
