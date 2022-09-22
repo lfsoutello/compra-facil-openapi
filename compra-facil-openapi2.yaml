@@ -11,358 +11,290 @@ info:
 host: "api.comprafacil.com"
 basePath: "/v1"
 tags:
-- name: "produtos"
-  description: "Procure e gerencie produtos no Compra Fácil"
-- name: "afiliados"
-  description: "Gerencia afiliados no compra fácil"
-security: #TODO
+  - name: "produtos"
+    description: "Procure e gerencie produtos no Compra Fácil"
+  - name: "afiliados"
+    description: "Gerencia afiliados no compra fácil"
+security:
   - client_id: []
   - access_token: []
-securityDefinitions: #TODO
+securityDefinitions:
   client_id:
-    type: apiKey
-    in: header
-    name: client_id
+    type: "apiKey"
+    in: "header"
+    name: "client_id"
   access_token:
-    type: apiKey
-    in: header
-    name: access_token
+    type: "apiKey"
+    in: "header"
+    name: "access_token"
 schemes:
-- "https"
-consumes: 
-  - application/json
-produces:
-  - application/json
+  - "https"
 paths:
   /produtos:
     get:
       tags:
-      - "produtos"
+        - "produtos"
       summary: "Procure todos os pordutos usando os filtros parafinar a busca"
-      description: "Aqui são apresentados como parâmetros os possíveis filtros de busca e no último parâmetro os critérios de busca"
-      consumes:
-        - application/json
+      description: "A busca é paginada com 30 produtos por página"
       produces:
-      - "application/json"
-      operationId: obterProdutos
+        - "application/json"
+      operationId: "obterProdutos"
       parameters:
-      - name: "preco_minimo"
-        in: "query"
-        description: "Preço mínimo do produto"
-        type: "number"
-      - name: "preco_maximo"
-        in: "query"
-        description: "Preço máximo do produto"
-        type: number
-      - name: "desconto"
-        in: "query"
-        description: "Caso verdadeiro traz apenas produtos com desconto, coso falso traz todos os produtos"
-        type: boolean
-        default: false
-      - name: "nome"
-        in: "query"
-        description: "Nome do produto"
-        type: string
-      - name: "categoria"
-        in: "query"
-        description: "Categoria do produto"
-        type: string
-      - name: "ordem"
-        in: "query"
-        description: "Critério de ordenação dos resultados"
-        type: string
-        enum: [preco_crescente, preco_decrescente, mais_vendidos, lancamentos]
-        default: mais_vendidos
-      security: #TODO
-        - client_id: []
-        - access_token: []        
+        - name: "preco_minimo"
+          in: "query"
+          description: "Preço mínimo do produto"
+          type: "number"
+        - name: "preco_maximo"
+          in: "query"
+          description: "Preço máximo do produto"
+          type: number
+        - name: "desconto"
+          in: "query"
+          description: "Caso verdadeiro traz apenas produtos com desconto, coso falso traz todos os produtos"
+          type: boolean
+          default: false
+        - name: "nome"
+          in: "query"
+          description: "Nome do produto"
+          type: string
+        - name: "categoria"
+          in: "query"
+          description: "Categoria do produto"
+          type: "string"
+        - name: "ordem"
+          in: "query"
+          description: "Critério de ordenação dos resultados"
+          type: "string"
+          enum:
+            [
+              "preco_crescente",
+              "preco_decrescente",
+              "mais_vendidos",
+              "lancamentos",
+            ]
+          default: "mais_vendidos"
+        - name: "page"
+          in: "query"
+          description: "Número da pagina da busca"
+          type: "integer"
+          default: 0
       responses:
-        '200':
-          description: Sucesso.
+        "200":
+          description: "Sucesso com todos os resultados."
           schema:
-            type: array
+            type: "array"
             items:
-              $ref: '#/definitions/produto'
-        '401':
-          description: Não autorizado.
-        '403':
-          description: Proibido.
-        '500':
-          description: Erro Interno.
-    post:
-      tags:
-        - produtos
-      summary: 'Cadastre seu produto em sua loja parceira'
-      description: 'Cadastrando um produto aqui, ele aparecerá no e-commerce compra-fácil como produto de vendedores parceiros'
-      operationId: adicionarProduto
-      parameters:
-      - name: "produto"
-        in: "body"
-        description: "Cadastre um novo produto"
-        required: true
-        schema:
-          $ref: '#/definitions/produto'
-      responses:
-        '200':
-          description: Sucesso.
-        '401':
-          description: Não autorizado.
-        '403':
-          description: Proibido.
-        '500':
-          description: Erro Interno.               
+              $ref: "#/definitions/produto"
+        "206":
+          description: "Sucesso com resultado paginado."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/produto"
+        "401":
+          description: "Não autorizado."
+        "429":
+          description: "Muitas requisições."
+        "500":
+          description: "Erro Interno."
   /produtos/{produtoId}:
     get:
       tags:
         - "produtos"
-      summary: 'Procure detalhes de produto cadastrado' 
-      description: 'Retorna detalhes de um produto cadastrado no e-commerce compra-fácil a partir de seu ID'
+      summary: "Veja detalhes de produto cadastrado"
+      description: "Retorna detalhes de um produto cadastrado no e-commerce compra-fácil a partir de seu ID"
       consumes:
-        - application/json
+        - "application/json"
       produces:
-        - "application/json"      
-      operationId: obterProdutoPorId
+        - "application/json"
+      operationId: "obterProdutoPorId"
       parameters:
-        - name: produtoId
-          in: path
-          description: 'Id do produto a ser consultado'
+        - name: "produtoId"
+          in: "path"
+          description: "Id do produto a ser consultado"
           required: true
-          type: integer
-          format: int64
-      security: #TODO
-        - client_id: []
-        - access_token: []          
+          type: "integer"
+          format: "int64"
       responses:
-        '200':
-          description: Sucesso.
-        '401':
-          description: Não autorizado.
-        '403':
-          description: Proibido.
-        '500':
-          description: Erro Interno.
-    put:
-        tags:
-          - produtos
-        summary: 'Altere um produto cadastrado'
-        description: 'Altere um produto já cadastrado a partir do seu id'
-        operationId: alterarProduto
-        parameters:
-        - name: produtoId
-          in: path
-          description: 'Id do produto a ser alterado'
-          required: true
-          type: integer
-          format: int64        
-        - name: "produto"
-          in: "body"
-          description: "Cadastre um novo produto"
-          required: true
+        "200":
+          description: "Sucesso."
           schema:
-            $ref: '#/definitions/produto'
-        responses:
-          '200':
-            description: Sucesso.
-          '401':
-            description: Não autorizado.
-          '403':
-            description: Proibido.
-          '500':
-            description: Erro Interno.                  
-    delete:
-      tags:
-        - "produtos"
-      summary: "Delete um produto já cadastrado"
-      description: 'Remove um produto cadastrado no e-commerce compra-fácil a partir do seu id'
-      consumes:
-        - application/json
-      produces:
-        - "application/json"      
-      operationId: removerProdutoPorId
-      parameters:
-        - name: produtoId
-          in: path
-          description: 'Id do produto a ser removido'
-          required: true
-          type: integer
-          format: int64      
-      security: #TODO
-        - client_id: []
-        - access_token: []          
-      responses:
-        '200':
-          description: Sucesso.
-        '401':
-          description: Não autorizado.
-        '403':
-          description: Proibido.
-        '500':
-          description: Erro Interno.
+            $ref: "#/definitions/produto"
+        "401":
+          description: "Não autorizado."
+        "404":
+          description: "Produto não encontrado."
+        "500":
+          description: "Erro Interno."
   /afiliados:
-    get:
-      tags:
-      - "afiliados"
-      summary: "Busque afiliados"
-      description: "Retorna todos os afiliados cadastrados no e-commerce compra-fácil"
-      consumes:
-        - application/json
-      produces:
-      - "application/json"
-      operationId: obterAfiliados
-      security: #TODO
-        - client_id: []
-        - access_token: []        
-      responses:
-        '200':
-          description: Sucesso.
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/afiliado'
-        '401':
-          description: Não autorizado.
-        '403':
-          description: Proibido.
-        '500':
-          description: Erro Interno.
     post:
       tags:
-        - afiliados
-      summary: 'Cadastre um afiliado'
-      description: 'Cadastre um novo afiliado para o e-commerce compra-fácil para atuar como vendedor parceiro'
-      operationId: adicionarAfiliado
+        - "afiliados"
+      summary: "Cadastre um afiliado"
+      description: "Cadastre um novo afiliado para o e-commerce compra-fácil para atuar como parceiro"
+      operationId: "adicionarAfiliado"
       parameters:
-      - name: "afiliado"
-        in: "body"
-        description: "Cadastre um novo afiliado"
-        required: true
-        schema:
-          $ref: '#/definitions/afiliado'
+        - name: "afiliado"
+          in: "body"
+          description: "Cadastre um novo afiliado"
+          required: true
+          schema:
+            $ref: "#/definitions/afiliadoPayload"
       responses:
-        '200':
-          description: Sucesso.
-        '401':
-          description: Não autorizado.
-        '403':
-          description: Proibido.
-        '500':
-          description: Erro Interno.               
-  /afiliados/{afiliadoId}:               
+        "201":
+          description: "Sucesso."
+          schema:
+            $ref: "#/definitions/afiliado"
+        "422":
+          description: "Erro na mensagem."
+        "500":
+          description: "Erro Interno."
+  /afiliados/{afiliadoId}:
     get:
       tags:
         - "afiliados"
-      summary: 'Busque afiliado por ID' 
-      description: 'Retorna detalhes de um afiliado cadastrado no e-commerce compra-fácil a partir de seu ID'
+      summary: "Veja detalhes de um afilhado cadastrado"
+      description: "Retorna detalhes de um afiliado cadastrado no e-commerce compra-fácil a partir de seu ID"
       consumes:
-        - application/json
+        - "application/json"
       produces:
-        - "application/json"      
-      operationId: obterAfiliadoPorId
+        - "application/json"
+      operationId: "obterAfiliadoPorId"
       parameters:
-        - name: afiliadoId
-          in: path
-          description: 'Id do afiliado a ser consultado'
+        - name: "afiliadoId"
+          in: "path"
+          description: "Id do afiliado a ser consultado"
           required: true
-          type: integer
-          format: int64
-      security: #TODO
-        - client_id: []
-        - access_token: []          
+          type: "integer"
+          format: "int64"
       responses:
-        '200':
-          description: Sucesso.
+        "200":
+          description: "Sucesso."
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/afiliado'
-        '401':
-          description: Não autorizado.
-        '403':
-          description: Proibido.
-        '500':
-          description: Erro Interno.
+            $ref: "#/definitions/afiliado"
+        "401":
+          description: "Não autorizado."
+        "403":
+          description: "Proibido."
+        "500":
+          description: "Erro Interno."
     put:
-        tags:
-          - afiliados
-        summary: 'Altere um afiliado cadastrado'
-        description: 'Altere um afiliado já cadastrado a partir do seu id'
-        operationId: alterarAfiliado
-        parameters:
-        - name: afiliadoId
-          in: path
-          description: 'Id do afiliado a ser alterado'
+      tags:
+        - "afiliados"
+      summary: "Atualize um afiliado cadastrado"
+      description: "Altere um afiliado já cadastrado a partir do seu id"
+      operationId: "alterarAfiliado"
+      parameters:
+        - name: "afiliadoId"
+          in: "path"
+          description: "Id do afiliado a ser alterado"
           required: true
-          type: integer
-          format: int64        
+          type: "integer"
+          format: "int64"
         - name: "afiliado"
           in: "body"
           description: "Altere um afiliado"
           required: true
           schema:
-            $ref: '#/definitions/afiliado'
-        responses:
-          '200':
-            description: Sucesso.
-          '401':
-            description: Não autorizado.
-          '403':
-            description: Proibido.
-          '500':
-            description: Erro Interno.                  
+            $ref: "#/definitions/afiliadoPayload"
+      responses:
+        "200":
+          description: "Sucesso."
+          schema:
+            $ref: "#/definitions/afiliado"
+        "201":
+          description: "Criado."
+          schema:
+            $ref: "#/definitions/afiliado"
+        "401":
+          description: "Não autorizado."
+        "403":
+          description: "Proibido."
+        "422":
+          description: "Erro na mensagem."
+        "500":
+          description: "Erro Interno."
+    patch:
+      tags:
+        - "afiliados"
+      summary: "Atualize parcialmente um afiliado cadastrado"
+      description: "Altere parcialmente um afiliado já cadastrado a partir do seu id"
+      operationId: "alterarParcialmeteAfiliado"
+      parameters:
+        - name: "afiliadoId"
+          in: "path"
+          description: "Id do afiliado a ser alterado"
+          required: true
+          type: "integer"
+          format: "int64"
+        - name: "afiliado"
+          in: "body"
+          description: "Altere um afiliado"
+          required: true
+          schema:
+            $ref: "#/definitions/afiliadoPayloadParcial"
+      responses:
+        "200":
+          description: "Sucesso."
+          schema:
+            $ref: "#/definitions/afiliado"
+        "401":
+          description: "Não autorizado."
+        "403":
+          description: "Proibido."
+        "500":
+          description: "Erro Interno."
     delete:
       tags:
         - "afiliados"
       summary: "Delete um afiliado cadastrado"
-      description: 'Remove um afiliado cadastrado no e-commerce compra-fácil a partir do seu id'
+      description: "Remove um afiliado cadastrado no e-commerce compra-fácil a partir do seu id"
       consumes:
-        - application/json
+        - "application/json"
       produces:
-        - "application/json"      
-      operationId: removerAfiliado
+        - "application/json"
+      operationId: "removerAfiliado"
       parameters:
-        - name: afiliadoId
-          in: path
-          description: 'Id do afiliado a ser removido'
+        - name: "afiliadoId"
+          in: "path"
+          description: "Id do afiliado a ser removido"
           required: true
-          type: integer
-          format: int64      
-      security: #TODO
-        - client_id: []
-        - access_token: []          
+          type: "integer"
+          format: "int64"
       responses:
-        '200':
-          description: Sucesso.
-        '401':
-          description: Não autorizado.
-        '403':
-          description: Proibido.
-        '500':
-          description: Erro Interno.  
-definitions: 
+        "200":
+          description: "Sucesso."
+        "401":
+          description: "Não autorizado."
+        "403":
+          description: "Proibido."
+        "500":
+          description: "Erro Interno."
+definitions:
   produto:
-    type: object
+    type: "object"
     properties:
       id:
-        type: integer
-        example: 1   
+        type: "integer"
+        example: 1
       nome:
-        type: string
+        type: "string"
         example: "Smartphone Samsung Galaxy S22 Ultra"
       descricaoCurta:
-        type: string
+        type: "string"
         example: "Smartphone Samsung Galaxy S22 Ultra 5G SM-S908E 12GB RAM 256GB Câmera Quádrupla"
       descricao:
-        type: string
+        type: "string"
         example: "Contando com o sistema operacional Android, Samsung traz seu modelo, o Smartphone Samsung Galaxy S22 Ultra 5G SM-S908E 12GB RAM 256GB Câmera Quádrupla. O aparelho apresenta 16.33cm de altura e 7.79cm de largura, com peso de 228.0g. O celular conta com uma frontal de 40.0 MP, sensores traseiros de 108.0 + 10.0 + 10.0 + 12.0 MP."
       marca:
-        type: string
+        type: "string"
         example: "Samsung"
       ativo:
-        type: boolean
+        type: "boolean"
         example: true
       categorias:
         example: ["Smartphone"]
-      detalhesDoProduto: 
+      detalhesDoProduto:
         example:
           preco: 6499
           quantidade: 15
@@ -371,41 +303,63 @@ definitions:
           altura: 9
           largura: 8
           comprimento: 7
-          tipoDeUnidade: 'caixa'
+          tipoDeUnidade: "caixa"
           codigoDeBarras: "123456789012"
           atributos:
-            [
-              {tipo: "cor", nome: "Preto"},
-              {tipo: "cor", nome: "Azul"}
-            ]
-      urlFotos: 
-        example: [
-          'https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-s22-ultra-5g-2.jpg', 
-          'https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-s22-ultra-5g-6.jpg', 
-          'https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-s22-ultra-5g-4.jpg'
-        ]
-      urlVideos: 
-        example: [
-          'https://www.youtube.com/watch?v=2Jdpwb_0F5w'
-        ]    
+            [{ tipo: "cor", nome: "Preto" }, { tipo: "cor", nome: "Azul" }]
+      urlFotos:
+        example:
+          [
+            "https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-s22-ultra-5g-2.jpg",
+            "https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-s22-ultra-5g-6.jpg",
+            "https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-s22-ultra-5g-4.jpg",
+          ]
+      urlVideos:
+        example: ["https://www.youtube.com/watch?v=2Jdpwb_0F5w"]
   afiliado:
-    type: object
+    type: "object"
     properties:
       id:
-        type: integer
+        type: "integer"
         example: 1
       nome:
-        type: string
+        type: "string"
         example: "Fulano da Silva"
-      email: 
-        type: string
+      email:
+        type: "string"
         example: "fulano@dominio.com"
       cpf:
-        type: string
-        example: '12345678901'
+        type: "string"
+        example: "12345678901"
       nomeEmpresa:
-        type: string
+        type: "string"
         example: "MarketPlace afiliado do Fulano"
       cnpjEmpresa:
-        type: string
-        example: '12345678901234'
+        type: "string"
+        example: "12345678901234"
+
+  afiliadoPayload:
+    type: "object"
+    properties:
+      nome:
+        type: "string"
+        example: "Fulano da Silva"
+      email:
+        type: "string"
+        example: "fulano@dominio.com"
+      cpf:
+        type: "string"
+        example: "12345678901"
+      nomeEmpresa:
+        type: "string"
+        example: "MarketPlace afiliado do Fulano"
+      cnpjEmpresa:
+        type: "string"
+        example: "12345678901234"
+
+  afiliadoPayloadParcial:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+        example: "fulano@dominio.com"
