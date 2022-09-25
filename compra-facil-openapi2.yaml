@@ -168,8 +168,8 @@ paths:
     get:
       tags:
         - "afiliados"
-      summary: "Pesquise seus afiliados"
-      description: "Cadastre um novo afiliado para o e-commerce compra-fácil para atuar como parceiro"
+      summary: "Procure todos os afiliados usando os filtros parafinar a busca"
+      description: "A busca é paginada com 30 produtos por página"
       operationId: "pesquisarAfiliados"
       parameters:
         - name: "cnpjEmpresa"
