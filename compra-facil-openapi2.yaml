@@ -47,16 +47,16 @@ paths:
         - name: "preco_maximo"
           in: "query"
           description: "Preço máximo do produto"
-          type: number
+          type: "number"
         - name: "desconto"
           in: "query"
           description: "Caso verdadeiro traz apenas produtos com desconto, coso falso traz todos os produtos"
-          type: boolean
+          type: "boolean"
           default: false
         - name: "nome"
           in: "query"
           description: "Nome do produto"
-          type: string
+          type: "string"
         - name: "categoria"
           in: "query"
           description: "Categoria do produto"
@@ -93,10 +93,16 @@ paths:
               $ref: "#/definitions/produto"
         "401":
           description: "Não autorizado."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
         "429":
           description: "Muitas requisições."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
         "500":
           description: "Erro Interno."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
   /produtos/{produtoId}:
     get:
       tags:
@@ -122,10 +128,16 @@ paths:
             $ref: "#/definitions/produto"
         "401":
           description: "Não autorizado."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
         "404":
           description: "Produto não encontrado."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
         "500":
           description: "Erro Interno."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
   /afiliados:
     post:
       tags:
@@ -147,8 +159,56 @@ paths:
             $ref: "#/definitions/afiliado"
         "422":
           description: "Erro na mensagem."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
         "500":
           description: "Erro Interno."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
+    get:
+      tags:
+        - "afiliados"
+      summary: "Pesquise seus afiliados"
+      description: "Cadastre um novo afiliado para o e-commerce compra-fácil para atuar como parceiro"
+      operationId: "pesquisarAfiliados"
+      parameters:
+        - name: "cnpjEmpresa"
+          in: "query"
+          description: "CNPJ da empresa que o afilhado trabalha"
+          type: "string"
+        - name: "nomeEmpresa"
+          in: "query"
+          description: "Nome da empresa que o afilhado trabalha"
+          type: "string"
+        - name: "categoria"
+          in: "query"
+          description: "Categoria dos produtos que o afiliado vende"
+          type: "string"
+      responses:
+        "200":
+          description: "Sucesso com todos os resultados."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/produto"
+        "206":
+          description: "Sucesso com resultado paginado."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/produto"
+        "401":
+          description: "Não autorizado."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
+        "429":
+          description: "Muitas requisições."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
+        "500":
+          description: "Erro Interno."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
   /afiliados/{afiliadoId}:
     get:
       tags:
@@ -174,10 +234,16 @@ paths:
             $ref: "#/definitions/afiliado"
         "401":
           description: "Não autorizado."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
         "403":
           description: "Proibido."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
         "500":
           description: "Erro Interno."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
     put:
       tags:
         - "afiliados"
@@ -208,12 +274,20 @@ paths:
             $ref: "#/definitions/afiliado"
         "401":
           description: "Não autorizado."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
         "403":
           description: "Proibido."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
         "422":
           description: "Erro na mensagem."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
         "500":
           description: "Erro Interno."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
     patch:
       tags:
         - "afiliados"
@@ -240,10 +314,16 @@ paths:
             $ref: "#/definitions/afiliado"
         "401":
           description: "Não autorizado."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
         "403":
           description: "Proibido."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
         "500":
           description: "Erro Interno."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
     delete:
       tags:
         - "afiliados"
@@ -266,10 +346,16 @@ paths:
           description: "Sucesso."
         "401":
           description: "Não autorizado."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
         "403":
           description: "Proibido."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
         "500":
           description: "Erro Interno."
+          schema:
+            $ref: "#/definitions/erroBodyPayload"
 definitions:
   produto:
     type: "object"
@@ -337,6 +423,9 @@ definitions:
       cnpjEmpresa:
         type: "string"
         example: "12345678901234"
+      categoria:
+        type: "string"
+        example: "eletrônicos"
 
   afiliadoPayload:
     type: "object"
@@ -356,6 +445,9 @@ definitions:
       cnpjEmpresa:
         type: "string"
         example: "12345678901234"
+      categoria:
+        type: "string"
+        example: "eletrônicos"
 
   afiliadoPayloadParcial:
     type: "object"
@@ -363,3 +455,13 @@ definitions:
       email:
         type: "string"
         example: "fulano@dominio.com"
+
+  erroBodyPayload:
+    type: "object"
+    properties:
+      codigo:
+        type: "string"
+        example: "ERRO-12"
+      mensagem:
+        type: "string"
+        example: "Erro de validação do CPF"
